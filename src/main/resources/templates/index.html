@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envio e Download de Arquivos</title>
+</head>
+<body>
+<h1>Envio de Arquivos</h1>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="imagem" accept=".jpg, .jpeg, .png">
+    <button type="submit">Enviar Imagem</button>
+</form>
+
+<h1>Downloads</h1>
+<ul>
+    <li><a href="http://localhost:8080/downloads" target="_blank">Pagina de downloads</a></li>
+    <li><a href="http://localhost:8080/downloads/api" target="_blank">API downloads</a></li>
+</ul>
+</body>
+</html>
