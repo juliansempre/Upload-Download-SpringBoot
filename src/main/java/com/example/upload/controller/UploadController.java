@@ -1,11 +1,7 @@
 package com.example.upload.controller;
 
-import jakarta.annotation.Resource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
@@ -44,37 +39,21 @@ public class UploadController {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
             // Crie a URL de download para o arquivo recém-carregado
-            String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/download/")
-                    .path(fileName)
-                    .toUriString();
+            String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(fileName).toUriString();
 
-            return ResponseEntity.ok("Imagem enviada com sucesso! URL de download: " + downloadUrl +
-                    "<script>" +
-                    "alert('Arquivo enviado com sucesso!');" +
-                    " window.location.href = '/';" +
-                    "</script>"
-            );
+            return ResponseEntity.ok("<!--Imagem enviada com sucesso! URL de download: " + downloadUrl + "--> <script>" + "alert('Arquivo enviado com sucesso!');" + " window.location.href = '/';" + "</script>");
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao fazer upload da imagem."+
-                    "<script>" +
-                    "alert('Arquivo enviado com sucesso!');" +
-                    " window.location.href = '/';" +
-                    "</script>"
-            );
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("" + "<script>" + "alert('Erro ao enviar!');" + " window.location.href = '/';" + "</script>");
         }
     }
 
     @GetMapping("/downloads")
     public ResponseEntity<String> listDownloads() {
         try {
-            List<String> downloadLinks = Files.list(Path.of(UPLOAD_DIR))
-                    .map(file -> {
-                        String fileName = file.getFileName().toString();
-                        return "<img src='uploads/"+ fileName +"'style='width: 80px;'><br>"+
-                                "<a href='/download/" + fileName + "' download> Clique para baixar: "+ fileName + "</a><br>";
-                    })
-                    .collect(Collectors.toList());
+            List<String> downloadLinks = Files.list(Path.of(UPLOAD_DIR)).map(file -> {
+                String fileName = file.getFileName().toString();
+                return "<img src='uploads/" + fileName + "'style='width: 80px;'><br>" + "<a href='/download/" + fileName + "' download> Clique para baixar: " + fileName + "</a><br>";
+            }).collect(Collectors.toList());
 
             StringBuilder htmlResponse = new StringBuilder("<html><body>");
             downloadLinks.forEach(link -> htmlResponse.append(link));
@@ -105,6 +84,7 @@ public class UploadController {
             return ResponseEntity.notFound().build();
         }
     }
+
     //Exibir as imagens
     @GetMapping("/image/{imageName}")
     public ResponseEntity<String> getImage(@PathVariable String imageName) {
@@ -115,16 +95,13 @@ public class UploadController {
         String imageTag = "<img src='" + imagePath + imageName + "'>";
 
         // Retornar a tag HTML no corpo da resposta
-        return ResponseEntity.ok()
-                .contentType(org.springframework.http.MediaType.TEXT_HTML)
-                .body(imageTag);
+        return ResponseEntity.ok().contentType(org.springframework.http.MediaType.TEXT_HTML).body(imageTag);
     }
+
     @GetMapping("/downloads/api")
     public ResponseEntity<Map<String, List<String>>> listDownloadsAPI() {
         try {
-            List<String> fileNames = Files.list(Path.of(UPLOAD_DIR))
-                    .map(file -> file.getFileName().toString())
-                    .collect(Collectors.toList());
+            List<String> fileNames = Files.list(Path.of(UPLOAD_DIR)).map(file -> file.getFileName().toString()).collect(Collectors.toList());
 
             Map<String, List<String>> response = new HashMap<>();
             response.put("meusarquivos", fileNames);
