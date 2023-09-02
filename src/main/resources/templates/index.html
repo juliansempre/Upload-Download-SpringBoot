@@ -5,18 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Envio e Download de Arquivos</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body>
-<h1>Envio de Arquivos</h1>
-<form action="/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="imagem" accept=".jpg, .jpeg, .png">
-    <button type="submit">Enviar Imagem</button>
-</form>
 
-<h1>Downloads</h1>
-<ul>
-    <li><a href="http://localhost:8080/downloads" target="_blank">Pagina de downloads</a></li>
-    <li><a href="http://localhost:8080/downloads/api" target="_blank">API downloads</a></li>
-</ul>
+<div class="containeri">
+
+    <h1>Envio de Arquivos</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <input type="file" name="imagem" accept=".jpg, .jpeg, .png">
+        <button type="submit">Enviar Imagem</button>
+    </form>
+
+    <h1>Downloads</h1>
+    <ul class="horizontal-list">
+        <li><a href="http://localhost:8080/downloads" target="_blank">
+        <img src="https://www.svgrepo.com/show/525323/download-square.svg">
+            <p class="btni">Pagina de downloads</p>
+        </a></li>
+        <li><a href="http://localhost:8080/downloads/api" target="_blank">
+            <img src="https://www.svgrepo.com/show/530439/api-interface.svg">
+            <p class="btni">API downloads</p>
+        </a></li>
+    </ul>
+</div>
+<div id="tabeladearquivos"></div>
+<script src="js/main.js"></script>
+
+<div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
+    <h1>Galeria</h1>
+<div class="galeria flex flex-wrap -mx-2"></div>
+</div>
 </body>
 </html>

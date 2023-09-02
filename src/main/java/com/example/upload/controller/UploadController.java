@@ -1,9 +1,11 @@
-package com.example.upload;
+package com.example.upload.controller;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import jakarta.annotation.Resource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,24 +15,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@SpringBootApplication
-public class ImageUploadDownloadApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(ImageUploadDownloadApplication.class, args);
-    }
-}
-
 @RestController
-class ImageController {
+public class UploadController {
 
-    private static final String UPLOAD_DIR = "./uploads";
+    private static final String UPLOAD_DIR = "static/uploads";
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@RequestParam("imagem") MultipartFile file) {
@@ -76,7 +71,8 @@ class ImageController {
             List<String> downloadLinks = Files.list(Path.of(UPLOAD_DIR))
                     .map(file -> {
                         String fileName = file.getFileName().toString();
-                        return "<a href='/download/" + fileName + "' download>" + fileName + "</a><br>";
+                        return "<img src='uploads/"+ fileName +"'style='width: 80px;'><br>"+
+                                "<a href='/download/" + fileName + "' download> Clique para baixar: "+ fileName + "</a><br>";
                     })
                     .collect(Collectors.toList());
 
@@ -109,7 +105,20 @@ class ImageController {
             return ResponseEntity.notFound().build();
         }
     }
+    //Exibir as imagens
+    @GetMapping("/image/{imageName}")
+    public ResponseEntity<String> getImage(@PathVariable String imageName) {
+        // O caminho para a pasta onde as imagens estão armazenadas
+        String imagePath = "/uploads/";
 
+        // Construir a tag HTML <img> com o caminho da imagem
+        String imageTag = "<img src='" + imagePath + imageName + "'>";
+
+        // Retornar a tag HTML no corpo da resposta
+        return ResponseEntity.ok()
+                .contentType(org.springframework.http.MediaType.TEXT_HTML)
+                .body(imageTag);
+    }
     @GetMapping("/downloads/api")
     public ResponseEntity<Map<String, List<String>>> listDownloadsAPI() {
         try {

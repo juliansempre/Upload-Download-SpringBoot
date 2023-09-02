@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Poppins:wght@400;500;600&display=swap');
+*{
+text-decoration: none;
+}
+body {
+    font-family: Montserrat, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+      display: grid;
+      place-items: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Estilos para o formulário de envio de arquivos */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+input[type="file"] {
+    margin-right: 10px;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilos para a lista de downloads */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para links externos */
+.external-links {
+    margin-top: 20px;
+}
+.containeri {
+  width: 600px;
+  height: 450px;
+  background-color: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-top: 5%;
+}
+.containeri img{
+ width: 60px;
+}
+.btni {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(242,242,242);
+  color: gray;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btni:hover {
+  background-color: gray;
+  color: rgb(242,242,242);
+  border: 1px solid gray;
+}
+a {
+display: flex;
+align-items: center;
+}
+.horizontal-list {
+    list-style-type: none; /* Remover marcadores de lista */
+    padding: 0; /* Remover preenchimento padrão da lista */
+}
+
+.horizontal-list li {
+    display: inline-block; /* Fazer com que os itens da lista se comportem como elementos em linha com bloco */
+    margin-right: 20px; /* Espaçamento entre os elementos <li> (opcional, ajuste conforme necessário) */
+}
+.minhasimagens{
+    width: 200px;
+}
+.galeria{
+display: flex;
+justify-content:center;
+width: 100%;
+height: auto;
+}
